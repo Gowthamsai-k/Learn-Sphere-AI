@@ -730,88 +730,47 @@ export default function LearnSphereApp() {
   return (
     <div className="min-h-screen bg-[#f8fafc] text-slate-800 flex flex-col font-sans">
       {/* Header */}
-      <header className="bg-white border-b border-slate-100 sticky top-0 z-50 px-8 py-4 flex items-center justify-between shadow-sm">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-md">
+      <header className="bg-white border-b border-slate-100 sticky top-0 z-50 px-4 md:px-8 py-3 md:py-4 flex items-center justify-between shadow-sm">
+        <div className="flex items-center gap-2 md:gap-3">
+          <div className="w-9 h-9 md:w-10 md:h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white font-bold text-lg md:text-xl shadow-md">
             L
           </div>
-          <div>
-            <h1 className="text-xl font-bold bg-gradient-to-r from-blue-900 to-indigo-900 bg-clip-text text-transparent">
-              Learn-Sphere AI
-            </h1>
-
-          </div>
+          <h1 className="text-base md:text-xl font-bold bg-gradient-to-r from-blue-900 to-indigo-900 bg-clip-text text-transparent">
+            Learn-Sphere AI
+          </h1>
         </div>
 
-        {/* Navigation Tabs */}
-        <nav className="flex items-center gap-6">
-          <button
-            onClick={() => setActiveTab('dashboard')}
-            className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 ${activeTab === 'dashboard' ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:text-indigo-600'}`}
-          >
-            Dashboard
-          </button>
-          <button
-            onClick={() => {
-              if (documents.length > 0 && !selectedDocId) {
-                startStudy(documents[0].id, documents[0].title);
-              } else if (selectedDocId) {
-                setActiveTab('study');
-              } else {
-                setActiveTab('study');
-              }
-            }}
-            className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 ${activeTab === 'study' ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:text-indigo-600'}`}
-          >
-            Study Center
-          </button>
-          <button
-            onClick={() => {
-              if (documents.length > 0) {
-                startQuiz(documents[0].id, documents[0].title);
-              } else {
-                setActiveTab('quiz');
-              }
-            }}
-            className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 ${activeTab === 'quiz' ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:text-indigo-600'}`}
-          >
-            Quiz Lab
-          </button>
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex items-center gap-4">
+          <button onClick={() => setActiveTab('dashboard')} className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${activeTab === 'dashboard' ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:text-indigo-600'}`}>Dashboard</button>
+          <button onClick={() => { if (documents.length > 0 && !selectedDocId) { startStudy(documents[0].id, documents[0].title); } else if (selectedDocId) { setActiveTab('study'); } else { setActiveTab('study'); } }} className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${activeTab === 'study' ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:text-indigo-600'}`}>Study Center</button>
+          <button onClick={() => { if (documents.length > 0) { startQuiz(documents[0].id, documents[0].title); } else { setActiveTab('quiz'); } }} className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${activeTab === 'quiz' ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:text-indigo-600'}`}>Quiz Lab</button>
         </nav>
 
-        {/* Search & Actions */}
-        <div className="flex items-center gap-4">
-          {currentUser && (
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => setActiveTab('account')}
-                className={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm border shadow-inner transition-all cursor-pointer hover:scale-105 ${activeTab === 'account' ? 'bg-indigo-600 text-white border-indigo-700 ring-2 ring-indigo-300' : 'bg-indigo-50 text-indigo-600 border-indigo-200 hover:border-indigo-400'}`}
-                title="My Account"
-              >
-                {getInitials(currentUser.name)}
-              </button>
-            </div>
-          )}
-        </div>
+        {currentUser && (
+          <button onClick={() => setActiveTab('account')} className={`w-8 h-8 md:w-9 md:h-9 rounded-full flex items-center justify-center font-bold text-sm border shadow-inner transition-all cursor-pointer hover:scale-105 ${activeTab === 'account' ? 'bg-indigo-600 text-white border-indigo-700 ring-2 ring-indigo-300' : 'bg-indigo-50 text-indigo-600 border-indigo-200 hover:border-indigo-400'}`} title="My Account">
+            {getInitials(currentUser.name)}
+          </button>
+        )}
       </header>
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto p-6 md:p-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 lg:p-8 pb-24 md:pb-8">
 
         {/* DASHBOARD TAB */}
         {activeTab === 'dashboard' && currentUser && (
           <div className="space-y-8 animate-fadeIn">
             {/* Welcome Section */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-blue-900 to-indigo-900 rounded-3xl p-8 text-white shadow-xl relative overflow-hidden">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-blue-900 to-indigo-900 rounded-2xl md:rounded-3xl p-5 md:p-8 text-white shadow-xl relative overflow-hidden">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(59,130,246,0.2),transparent_70%)]"></div>
-              <div className="relative z-10 space-y-2">
+              <div className="relative z-10 space-y-1.5">
                 <span className="text-xs bg-indigo-500/30 text-indigo-200 px-3 py-1 rounded-full font-semibold border border-indigo-500/20">Dashboard Analytics</span>
-                <h2 className="text-3xl font-extrabold tracking-tight">Welcome back, {currentUser.name}</h2>
-                <p className="text-indigo-100/80 text-sm">Ready to accelerate your learning journey today?</p>
+                <h2 className="text-xl md:text-3xl font-extrabold tracking-tight">Welcome back, {currentUser.name.split(' ')[0]}</h2>
+                <p className="text-indigo-100/80 text-xs md:text-sm">Ready to accelerate your learning journey today?</p>
               </div>
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="relative z-10 px-6 py-3 bg-white text-indigo-950 rounded-2xl font-bold text-sm shadow-lg hover:shadow-indigo-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 self-start md:self-auto"
+                className="relative z-10 px-4 md:px-6 py-2.5 md:py-3 bg-white text-indigo-950 rounded-xl md:rounded-2xl font-bold text-sm shadow-lg hover:shadow-indigo-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 self-start md:self-auto"
               >
                 <Plus className="w-4 h-4" />
                 Upload New Resource
@@ -820,9 +779,9 @@ export default function LearnSphereApp() {
 
 
             {/* Stat Cards Row */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Study Time Card */}
-              <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm flex flex-col justify-between relative overflow-hidden group hover:border-indigo-100 hover:shadow-md transition-all duration-300">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
+              {/* Study Time Card - spans full width on 2-col mobile grid */}
+              <div className="col-span-2 md:col-span-1 bg-white rounded-2xl md:rounded-3xl p-4 md:p-6 border border-slate-100 shadow-sm flex flex-col justify-between relative overflow-hidden group hover:border-indigo-100 hover:shadow-md transition-all duration-300">
                 <div className="flex items-start justify-between">
                   <div className="space-y-1">
                     <p className="text-[10px] font-bold text-slate-400 tracking-wider uppercase">Total Study Time</p>
@@ -845,7 +804,7 @@ export default function LearnSphereApp() {
               </div>
 
               {/* Mastery Level Card */}
-              <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm flex flex-col justify-between relative overflow-hidden group hover:border-indigo-100 hover:shadow-md transition-all duration-300">
+              <div className="bg-white rounded-2xl md:rounded-3xl p-4 md:p-6 border border-slate-100 shadow-sm flex flex-col justify-between relative overflow-hidden group hover:border-indigo-100 hover:shadow-md transition-all duration-300">
                 <div className="flex items-start justify-between">
                   <div className="space-y-1">
                     <p className="text-[10px] font-bold text-slate-400 tracking-wider uppercase">Mastery Level</p>
@@ -865,7 +824,7 @@ export default function LearnSphereApp() {
               </div>
 
               {/* Quizzes Completed Card */}
-              <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm flex flex-col justify-between relative overflow-hidden group hover:border-indigo-100 hover:shadow-md transition-all duration-300">
+              <div className="bg-white rounded-2xl md:rounded-3xl p-4 md:p-6 border border-slate-100 shadow-sm flex flex-col justify-between relative overflow-hidden group hover:border-indigo-100 hover:shadow-md transition-all duration-300">
                 <div className="flex items-start justify-between">
                   <div className="space-y-1">
                     <p className="text-[10px] font-bold text-slate-400 tracking-wider uppercase">Quizzes Completed</p>
@@ -1028,33 +987,24 @@ export default function LearnSphereApp() {
               </button>
             </div>
 
-            {/* Sub-navigation Tabs */}
-            <div className="flex border-b border-slate-200 gap-6">
-              <button
-                onClick={() => setStudySubTab('summary')}
-                className={`pb-3 font-semibold text-sm border-b-2 transition-all flex items-center gap-2 ${studySubTab === 'summary' ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-slate-500 hover:text-indigo-600'}`}
-              >
-                <BookOpen className="w-4 h-4" />
-                Executive Summary
+            {/* Sub-navigation Tabs – scrollable on mobile */}
+            <div className="flex border-b border-slate-200 gap-4 md:gap-6 overflow-x-auto scrollbar-none pb-px">
+              <button onClick={() => setStudySubTab('summary')} className={`pb-3 font-semibold text-xs md:text-sm border-b-2 transition-all flex items-center gap-1.5 whitespace-nowrap ${studySubTab === 'summary' ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-slate-500 hover:text-indigo-600'}`}>
+                <BookOpen className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                Summary
               </button>
-              <button
-                onClick={() => setStudySubTab('chat')}
-                className={`pb-3 font-semibold text-sm border-b-2 transition-all flex items-center gap-2 ${studySubTab === 'chat' ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-slate-500 hover:text-indigo-600'}`}
-              >
-                <MessageSquare className="w-4 h-4" />
-                AI Explainer Chat
+              <button onClick={() => setStudySubTab('chat')} className={`pb-3 font-semibold text-xs md:text-sm border-b-2 transition-all flex items-center gap-1.5 whitespace-nowrap ${studySubTab === 'chat' ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-slate-500 hover:text-indigo-600'}`}>
+                <MessageSquare className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                AI Chat
               </button>
-              <button
-                onClick={() => setStudySubTab('search')}
-                className={`pb-3 font-semibold text-sm border-b-2 transition-all flex items-center gap-2 ${studySubTab === 'search' ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-slate-500 hover:text-indigo-600'}`}
-              >
-                <Search className="w-4 h-4" />
-                Semantic Search & Citations
+              <button onClick={() => setStudySubTab('search')} className={`pb-3 font-semibold text-xs md:text-sm border-b-2 transition-all flex items-center gap-1.5 whitespace-nowrap ${studySubTab === 'search' ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-slate-500 hover:text-indigo-600'}`}>
+                <Search className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                Search
               </button>
             </div>
 
             {/* Subtab Contents */}
-            <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-100 shadow-sm min-h-[400px]">
+            <div className="bg-white rounded-2xl md:rounded-3xl p-4 md:p-8 border border-slate-100 shadow-sm min-h-[400px]">
               
               {/* SUMMARY SUBTAB */}
               {studySubTab === 'summary' && (
@@ -1082,7 +1032,7 @@ export default function LearnSphereApp() {
 
               {/* CHAT SUBTAB */}
               {studySubTab === 'chat' && (
-                <div className="flex flex-col h-[500px]">
+                <div className="flex flex-col h-[420px] md:h-[500px]">
                   {/* Chat Message Logs */}
                   <div className="flex-1 overflow-y-auto space-y-4 p-4 border border-slate-100 rounded-2xl bg-slate-50/50 mb-4">
                     {chatMessages.length === 0 ? (
@@ -1241,7 +1191,7 @@ export default function LearnSphereApp() {
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div className="flex flex-col lg:grid lg:grid-cols-3 gap-6 md:gap-8">
                 <div className="lg:col-span-2 space-y-6">
                   <div className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm flex items-center justify-between gap-4">
                     <span className="text-xs font-bold text-slate-500">
@@ -1340,7 +1290,7 @@ export default function LearnSphereApp() {
                   </div>
                 </div>
 
-                <div className="space-y-6">
+                <div className="space-y-4 md:space-y-6">
                   <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm space-y-4">
                     <div className="flex items-center justify-between">
                       <h4 className="font-extrabold text-slate-950 text-xs tracking-wider uppercase">Certainty Index</h4>
@@ -1505,7 +1455,7 @@ export default function LearnSphereApp() {
             className="absolute inset-0 bg-slate-950/40 backdrop-blur-sm transition-all"
           ></div>
 
-          <div className="bg-white rounded-3xl w-full max-w-xl p-6 shadow-2xl relative z-10 border border-slate-100 animate-scaleUp">
+          <div className="bg-white rounded-2xl md:rounded-3xl w-full max-w-xl p-4 md:p-6 shadow-2xl relative z-10 border border-slate-100 animate-scaleUp max-h-[90vh] overflow-y-auto">
             <button
               onClick={() => setIsModalOpen(false)}
               className="absolute right-4 top-4 p-1.5 rounded-xl hover:bg-slate-100 transition-all text-slate-400 hover:text-slate-600"
@@ -1606,8 +1556,8 @@ export default function LearnSphereApp() {
         </div>
       )}
 
-      {/* Footer */}
-      <footer className="bg-white border-t border-slate-100 py-6 px-8 mt-auto flex flex-col md:flex-row items-center justify-between gap-4 text-slate-400 text-xs">
+      {/* Footer – hidden on mobile (replaced by bottom nav) */}
+      <footer className="hidden md:flex bg-white border-t border-slate-100 py-6 px-8 mt-auto flex-col md:flex-row items-center justify-between gap-4 text-slate-400 text-xs">
         <p>Learn-Sphere AI &copy; 2026. All rights reserved.</p>
         <div className="flex items-center gap-6">
           <a href="#" className="hover:text-slate-600 transition-all">Support</a>
@@ -1615,6 +1565,31 @@ export default function LearnSphereApp() {
           <a href="#" className="hover:text-slate-600 transition-all">Terms of Service</a>
         </div>
       </footer>
+
+      {/* Mobile Bottom Navigation */}
+      <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-white border-t border-slate-100 shadow-lg flex items-center justify-around px-2 py-2 safe-area-pb">
+        <button onClick={() => setActiveTab('dashboard')} className={`flex flex-col items-center gap-1 px-4 py-1.5 rounded-xl transition-all ${activeTab === 'dashboard' ? 'text-indigo-600' : 'text-slate-400'}`}>
+          <BookOpen className="w-5 h-5" />
+          <span className="text-[10px] font-bold">Home</span>
+        </button>
+        <button onClick={() => { if (documents.length > 0 && !selectedDocId) { startStudy(documents[0].id, documents[0].title); } else if (selectedDocId) { setActiveTab('study'); } else { setActiveTab('study'); } }} className={`flex flex-col items-center gap-1 px-4 py-1.5 rounded-xl transition-all ${activeTab === 'study' ? 'text-indigo-600' : 'text-slate-400'}`}>
+          <MessageSquare className="w-5 h-5" />
+          <span className="text-[10px] font-bold">Study</span>
+        </button>
+        <button onClick={() => setIsModalOpen(true)} className="flex flex-col items-center gap-1 px-4 py-1.5">
+          <div className="w-11 h-11 rounded-2xl bg-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-500/30 -mt-5">
+            <Plus className="w-6 h-6 text-white" />
+          </div>
+        </button>
+        <button onClick={() => { if (documents.length > 0) { startQuiz(documents[0].id, documents[0].title); } else { setActiveTab('quiz'); } }} className={`flex flex-col items-center gap-1 px-4 py-1.5 rounded-xl transition-all ${activeTab === 'quiz' ? 'text-indigo-600' : 'text-slate-400'}`}>
+          <Sparkles className="w-5 h-5" />
+          <span className="text-[10px] font-bold">Quiz</span>
+        </button>
+        <button onClick={() => setActiveTab('account')} className={`flex flex-col items-center gap-1 px-4 py-1.5 rounded-xl transition-all ${activeTab === 'account' ? 'text-indigo-600' : 'text-slate-400'}`}>
+          <User className="w-5 h-5" />
+          <span className="text-[10px] font-bold">Account</span>
+        </button>
+      </nav>
     </div>
   );
 }
