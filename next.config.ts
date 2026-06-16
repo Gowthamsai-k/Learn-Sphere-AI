@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // pdf-parse and pdfjs-dist use dynamic require() calls (for workers) that
+  // Turbopack cannot statically analyse. Mark them as external so Next.js
+  // loads them via native Node.js require() at runtime instead of bundling.
+  serverExternalPackages: ["pdf-parse", "pdfjs-dist"],
 };
 
 export default nextConfig;
