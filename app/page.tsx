@@ -601,6 +601,15 @@ export default function LearnSphereApp() {
           setIsIngesting(false);
           return;
         }
+
+        // Vercel serverless functions have a strict request body limit of 4.5 MB
+        const maxLimit = 4.5 * 1024 * 1024;
+        if (selectedFile.size > maxLimit) {
+          alert("This PDF file is too large to upload (Limit: 4.5 MB on Vercel). Please compress the file or choose a smaller one.");
+          setIsIngesting(false);
+          return;
+        }
+
         const formData = new FormData();
         formData.append('file', selectedFile);
         res = await fetch('/api/ingest', {
@@ -622,7 +631,18 @@ export default function LearnSphereApp() {
         });
       }
 
-      const data = await res.json();
+      let data: any = {};
+      const contentType = res.headers.get('content-type') || '';
+      if (contentType.includes('application/json')) {
+        data = await res.json();
+      } else {
+        const textError = await res.text();
+        if (res.status === 413 || textError.includes("Payload Too Large") || textError.includes("Request Entity Too Large")) {
+          throw new Error("The file is too large for the Vercel serverless payload size (Max 4.5 MB).");
+        }
+        throw new Error(textError || `Server returned error status: ${res.status}`);
+      }
+
       if (res.ok && data.success) {
         setIsModalOpen(false);
         setNewDocTitle('');
